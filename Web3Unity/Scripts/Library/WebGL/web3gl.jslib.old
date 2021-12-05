@@ -108,17 +108,5 @@ mergeInto(LibraryManager.library, {
                 blockExplorerUrls: ['https://testnet.bscscan.com']
             }]
         });
-    },
-	
-	CheckMetaMaskInstalled: function () {
-		if(typeof window.ethereum !== 'undefined') {
-			return window.ethereum.isMetaMask;
-		}
-		return false;
-	},
-	
-	OpenURL: function (url) {
-		url = Pointer_stringify(url);
-        window.open(url,'_blank');
-	}
+    }
 });
