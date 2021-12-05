@@ -68,8 +68,7 @@ mergeInto(LibraryManager.library, {
         return buffer;
     },
 	
-    SetSignMessageResponse: function (value) {
-        window.web3gl.signMessageResponse = value;
+	SetHandle: function () {
 		if (typeof window.ethereum !== 'undefined')
 		{
 			window.ethereum.on('chainChanged', function (chainId) {
@@ -83,11 +82,27 @@ mergeInto(LibraryManager.library, {
 			window.unityInstance.SendMessage("HandleJS", "HandlerNetworkChanged", networkId);
 			});
 			window.ethereum.on('accountsChanged', function (accounts) {
-			console.log('accountsChanged');
-			console.log(accounts);
-			window.unityInstance.SendMessage("HandleJS", "HandleAccountsChanged", accounts);
+				console.log('accountsChanged');
+				console.log(accounts);
+				if(accounts.length > 0)
+				{
+					console.log('reconnect');
+				} 
+				else
+				{
+					console.log('disconnect');
+					window.unityInstance.SendMessage("HandleJS", "HandleAccountsChanged");
+				}
+			});
+			window.ethereum.on('disconnect', function (){
+			
+			window.unityInstance.SendMessage("HandleJS", "HandleDisconnect");
 			});
 		}
+    },
+	
+    SetSignMessageResponse: function (value) {
+        window.web3gl.signMessageResponse = value;
     },
 		
     GetNetwork: function () {
@@ -138,5 +153,16 @@ mergeInto(LibraryManager.library, {
             return window.ethereum.isMetaMask;
         }
         return false;
-    }
+    },
+	
+	CheckMetaMaskWalletConnected: function () {
+		if (typeof window.ethereum !== 'undefined') {
+		  const accounts = window.ethereum.selectedAddress;
+		  if(accounts && accounts.length > 0)
+		  {
+			return true;
+		  }
+		} 
+		return false;
+	}
 });
