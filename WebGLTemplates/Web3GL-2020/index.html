@@ -103,8 +103,13 @@ if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         mobileWarning.style.display = "none";
     }, 5000);
 } else {
-    canvas.style.width = "{{{ WIDTH }}}px";
-    canvas.style.height = "{{{ HEIGHT }}}px";
+    // canvas.style.width = "{{{ WIDTH }}}px";
+    // canvas.style.height = "{{{ HEIGHT }}}px";
+
+    var h = (document.documentElement.clientHeight - 56);
+    var w = Math.ceil(h/1.777);
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
 }
 #if
 BACKGROUND_FILENAME
