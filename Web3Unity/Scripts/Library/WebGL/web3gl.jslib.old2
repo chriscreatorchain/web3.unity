@@ -1,8 +1,8 @@
 mergeInto(LibraryManager.library, {
     Web3Connect: function () {
-		window.web3gl.connect();
-		
+        window.web3gl.connect();
     },
+
     ConnectAccount: function () {
         var bufferSize = lengthBytesUTF8(window.web3gl.connectAccount) + 1;
         var buffer = _malloc(bufferSize);
@@ -67,29 +67,11 @@ mergeInto(LibraryManager.library, {
         stringToUTF8(window.web3gl.signMessageResponse, buffer, bufferSize);
         return buffer;
     },
-	
+
     SetSignMessageResponse: function (value) {
         window.web3gl.signMessageResponse = value;
-		if (typeof window.ethereum !== 'undefined')
-		{
-			window.ethereum.on('chainChanged', function (chainId) {
-			console.log('handleChainChanged');
-			console.log(chainId);
-			window.unityInstance.SendMessage("HandleJS", "HandleChainChanged", chainId);
-			});
-			window.ethereum.on('networkChanged', function (networkId) {
-			console.log('handlerNetworkChanged');
-			console.log(networkId);
-			window.unityInstance.SendMessage("HandleJS", "HandlerNetworkChanged", networkId);
-			});
-			window.ethereum.on('accountsChanged', function (accounts) {
-			console.log('accountsChanged');
-			console.log(accounts);
-			window.unityInstance.SendMessage("HandleJS", "HandleAccountsChanged", accounts);
-			});
-		}
     },
-		
+
     GetNetwork: function () {
         return window.web3gl.networkId;
     },
@@ -127,16 +109,16 @@ mergeInto(LibraryManager.library, {
             }]
         });
     },
-	OpenURL : function(url)
-    {
-        url = Pointer_stringify(url);
+	
+	CheckMetaMaskInstalled: function () {
+		if(typeof window.ethereum !== 'undefined') {
+			return window.ethereum.isMetaMask;
+		}
+		return false;
+	},
+	
+	OpenURL: function (url) {
+		url = Pointer_stringify(url);
         window.open(url,'_blank');
-    },
-
-    CheckMetaMaskInstalled: function () {
-        if (typeof window.ethereum !== 'undefined') {
-            return window.ethereum.isMetaMask;
-        }
-        return false;
-    }
+	}
 });
