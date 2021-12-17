@@ -84,19 +84,10 @@ mergeInto(LibraryManager.library, {
 			window.ethereum.on('accountsChanged', function (accounts) {
 				console.log('accountsChanged');
 				console.log(accounts);
-				if(accounts.length > 0)
-				{
-					console.log('reconnect');
-				} 
-				else
-				{
-					console.log('disconnect');
-					window.unityInstance.SendMessage("HandleJS", "HandleAccountsChanged");
-				}
+				window.unityInstance.SendMessage("HandleJS", "HandleAccountsChanged");
 			});
 			window.ethereum.on('disconnect', function (){
-			
-			window.unityInstance.SendMessage("HandleJS", "HandleDisconnect");
+				window.unityInstance.SendMessage("HandleJS", "HandleDisconnect");
 			});
 		}
     },
@@ -155,14 +146,14 @@ mergeInto(LibraryManager.library, {
         return false;
     },
 	
-	CheckMetaMaskWalletConnected: function () {
+	GetSelectedAddress: function () {
 		if (typeof window.ethereum !== 'undefined') {
 		  const accounts = window.ethereum.selectedAddress;
 		  if(accounts && accounts.length > 0)
 		  {
-			return true;
+			return accounts;
 		  }
 		} 
-		return false;
+		return null;
 	}
 });
