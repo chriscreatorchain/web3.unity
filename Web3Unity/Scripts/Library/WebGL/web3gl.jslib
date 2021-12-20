@@ -146,6 +146,17 @@ mergeInto(LibraryManager.library, {
         return false;
     },
 	
+	CheckMetaMaskWalletConnected: function () {
+		if (typeof window.ethereum !== 'undefined') {
+		  const accounts = window.ethereum.selectedAddress;
+		  if(accounts && accounts.length > 0)
+		  {
+			return true;
+		  }
+		} 
+		return false;
+	},
+	
 	GetSelectedAddress: function () {
 		if (typeof window.ethereum !== 'undefined') {
 		  const accounts = window.ethereum.selectedAddress;
