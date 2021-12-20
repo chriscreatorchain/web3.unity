@@ -56,7 +56,7 @@
 var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
 var config = {
     dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
-    frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+    frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}" + "?vs={{{PRODUCT_VERSION}}}",
     codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
 #if
 MEMORY_FILENAME
