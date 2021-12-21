@@ -99,6 +99,17 @@ mergeInto(LibraryManager.library, {
     GetNetwork: function () {
         return window.web3gl.networkId;
     },
+	
+	GetEthereumNetworkVersion: function () {
+		var returnStr = "-1";
+		if (typeof window.ethereum !== 'undefined') {
+		  returnStr = window.ethereum.networkVersion;
+		}
+		var bufferSize = lengthBytesUTF8(returnStr) + 1;
+		var buffer = _malloc(bufferSize);
+		stringToUTF8(returnStr, buffer, bufferSize);
+		return buffer;
+    },
     
     BinanceSmartChainSwitch: function () {
         window.ethereum.request({
@@ -158,13 +169,17 @@ mergeInto(LibraryManager.library, {
 	},
 	
 	GetSelectedAddress: function () {
+		var returnStr = "empty";
 		if (typeof window.ethereum !== 'undefined') {
-		  const accounts = window.ethereum.selectedAddress;
+		  var accounts = window.ethereum.selectedAddress;
 		  if(accounts && accounts.length > 0)
 		  {
-			return accounts;
+			returnStr = accounts;
 		  }
-		} 
-		return null;
+		}
+		var bufferSize = lengthBytesUTF8(returnStr) + 1;
+		var buffer = _malloc(bufferSize);
+		stringToUTF8(returnStr, buffer, bufferSize);
+		return buffer;
 	}
 });
