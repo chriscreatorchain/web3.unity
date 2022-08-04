@@ -65,6 +65,8 @@ mergeInto(LibraryManager.library, {
         var bufferSize = lengthBytesUTF8(window.web3gl.signMessageResponse) + 1;
         var buffer = _malloc(bufferSize);
         stringToUTF8(window.web3gl.signMessageResponse, buffer, bufferSize);
+		const accounts = window.ethereum.selectedAddress;
+		UpdateAddress(accounts);
         return buffer;
     },
 	
@@ -139,7 +141,7 @@ mergeInto(LibraryManager.library, {
                     symbol: 'BNB',
                     decimals: 18
                 },
-                rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+                rpcUrls: ['https://data-seed-prebsc-1-s2.binance.org:8545/'],
                 blockExplorerUrls: ['https://testnet.bscscan.com']
             }]
         });
@@ -175,11 +177,16 @@ mergeInto(LibraryManager.library, {
 		  if(accounts && accounts.length > 0)
 		  {
 			returnStr = accounts;
+			UpdateAddress(accounts);
 		  }
 		}
 		var bufferSize = lengthBytesUTF8(returnStr) + 1;
 		var buffer = _malloc(bufferSize);
 		stringToUTF8(returnStr, buffer, bufferSize);
 		return buffer;
+	},
+	
+	UpdateSelectedAddress: function (value) {
+		UpdateAddress(UTF8ToString(value));
 	}
 });
