@@ -66,7 +66,6 @@ mergeInto(LibraryManager.library, {
         var buffer = _malloc(bufferSize);
         stringToUTF8(window.web3gl.signMessageResponse, buffer, bufferSize);
 		const accounts = window.ethereum.selectedAddress;
-		UpdateAddress(accounts);
         return buffer;
     },
 	
